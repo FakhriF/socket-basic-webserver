@@ -3,7 +3,7 @@ import sys                                  # Library yang digunakan untuk menge
 serverSocket = socket(AF_INET, SOCK_STREAM) # Membuat socket server baru dengan menggunakan protokol IPv4 (AF_INET) dan protokol TCP (SOCK_STREAM).
 serverName = '127.0.0.1'            # Menetapkan IP Address yang digunakan.
 serverPort = 80                     # Menetapkan Nomor port yang digunakan.
-serverSocket.bind(('', serverPort)) # Menetapkan nomor port dan IP address ke socket server,
+serverSocket.bind((serverName, serverPort)) # Menetapkan nomor port dan IP address ke socket server,
 serverSocket.listen(1)              # Socket server menunggu permintaan koneksi dari klien, parameter 1 menandakan jumlah koneksi maksimum yang dapat diterima oleh server.
 while True:                         # Program akan beroperasi sembari menunggu koneksi dari klien.
     print('Ready to Serve...')      # Jika koneksi berhasil terhubung, keluarkan output 
