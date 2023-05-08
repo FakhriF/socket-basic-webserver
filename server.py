@@ -28,7 +28,7 @@ while True:                         # Program akan beroperasi sembari menunggu k
     except IOError:                 # Jika data yang dikirim berbeda dengan yang telah didefinisikan
         error = "HTTP/1.1 404 NOT FOUND\r\nContent-Type: text/html\r\n\r\n" # HTTP response dari server jika permintaan klien tidak ditemukan oleh server    
         connectionSocket.send(error.encode())                               # response dikirim ke klien melalui connectionSocket
-        connectionSocket.send("<html><head><link rel='stylesheet' href='style.css'></head><body><div class='section-A'><h1>404 NOT FOUND</h1></div></body></html>".encode())  # Mengirimkan pesan informasi (dalam bentuk html) ke klien
+        connectionSocket.send("<html><head><link rel='stylesheet' href='style.css'><title>404 Not Found</title></head><body><div class='section-A'><h1>404 NOT FOUND</h1></div></body></html>".encode())  # Mengirimkan pesan informasi (dalam bentuk html) ke klien
     connectionSocket.close()        # Hentikan koneksi socket; memperbolehkan ada koneksi baru
 serverSocket.close()                # Hentikan socket server; memutus koneksi antar klien dan server
 sys.exit()                          # Exit program
