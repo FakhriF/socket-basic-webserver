@@ -19,7 +19,7 @@ while True:                         # Program akan beroperasi sembari menunggu k
         elif filename.endswith('.png'):                             # Cek jika filename yang dibuka merupakan file png
             content_type = "Content-Type: image/png\r\n\r\n"   # HTTP response dari server menandakan jenis kontent yang dikirim adalah image/png
         else:
-            content_type = "Content-Type: text/html\r\n\r\n"   # HTTP response dari server menandakan jenis kontent yang dikirim adalah text/html
+            content_type = "Content-Type: text/html; charset=utf-8\r\n\r\n"  # HTTP response dari server menandakan jenis kontent yang dikirim adalah text/html
         response = status_line+content_type                # Kedua variabel tersebut merupakan bagian header dari HTTP Response
         connectionSocket.send(response.encode())           # Response di konversi menjadi tipe data byte string, dan kemudian dikirimkan ke klien melalui connectionSocket
         for i in range(0, len(outputdata)):                # Melakukan iterasi pada isi file yang berada di variable outputdata
