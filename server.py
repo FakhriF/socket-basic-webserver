@@ -11,16 +11,21 @@ while True:                         # Program akan beroperasi sembari menunggu k
     try:                                                # Cek data dari klient
         message = connectionSocket.recv(1024).decode()  # Socket menerima data dari klien yang di konversi ke string dengan metode (.decode), data disimpan di varaibel message.
         filename = message.split()[1]                   # variable message di parsing, dan bagian dari indeks pertama (file/path) disimpan di variable filename. 
-        f = open(filename[1:])                       # Membuka file yang diminta oleh klien dengan metode open, karakter pertama dari nama file tidak dipanggil karena tidak dibutuhkan ('/')
-        outputdata = f.read()                        # Membaca isi file dengan metode .read, dan menyimpan isinya ke variabel outputdata
-        status_line = "HTTP/1.1 200 OK\r\n"                  # HTTP response dari server jika permintaan klien berhasil diproses oleh server
-        content_type = "Content-Type: text/html\r\n\r\n"   # HTTP response dari server yang menandakan jenis kontent yang dikirim adalah text/html
+        f = open(filename[1:], 'rb')                    # Membuka file yang diminta oleh klien dengan metode open, karakter pertama dari nama file tidak dipanggil karena tidak dibutuhkan ('/'), sedangkan parameter rb digunakan untuk membuka file dalam mode binary
+        outputdata = f.read()                           # Membaca isi file dengan metode .read, dan menyimpan isinya ke variabel outputdata
+        status_line = "HTTP/1.1 200 OK\r\n"                     # HTTP response dari server jika permintaan klien berhasil diproses oleh server
+        if filename.endswith('.jpg') or filename.endswith('.jpeg'): # Cek jika filename yang dibuka merupakan file jpg atau jpeg
+            content_type = "Content-Type: image/jpeg\r\n\r\n"  # HTTP response dari server menandakan jenis kontent yang dikirim adalah image/jpeg
+        elif filename.endswith('.png'):                             # Cek jika filename yang dibuka merupakan file png
+            content_type = "Content-Type: image/png\r\n\r\n"   # HTTP response dari server menandakan jenis kontent yang dikirim adalah image/png
+        else:
+            content_type = "Content-Type: text/html\r\n\r\n"   # HTTP response dari server menandakan jenis kontent yang dikirim adalah text/html
         response = status_line+content_type                # Kedua variabel tersebut merupakan bagian header dari HTTP Response
         connectionSocket.send(response.encode())           # Response di konversi menjadi tipe data byte string, dan kemudian dikirimkan ke klien melalui connectionSocket
         for i in range(0, len(outputdata)):                # Melakukan iterasi pada isi file yang berada di variable outputdata
-            connectionSocket.send(outputdata[i].encode())  # Mengirim isi file ke klien melalui connectionSocket
+            connectionSocket.send(outputdata[i:i+1])       # Mengirim isi file ke klien pada indeks i sampai indeks i+1 melalui connectionSocket
         connectionSocket.send("\r\n".encode())             # Mengirim string escape sequence (\r\n) melalui connectionSocket ketika loop berakhir
-    except IOError:                                  # Jika data yang dikirim berbeda dengan yang telah didefinisikan
+    except IOError:                 # Jika data yang dikirim berbeda dengan yang telah didefinisikan
         error = "HTTP/1.1 404 NOT FOUND\r\nContent-Type: text/html\r\n\r\n" # HTTP response dari server jika permintaan klien tidak ditemukan oleh server    
         connectionSocket.send(error.encode())                               # response dikirim ke klien melalui connectionSocket
         connectionSocket.send("<html><head><link rel='stylesheet' href='style.css'></head><body><div class='section-A'><h1>404 NOT FOUND</h1></div></body></html>".encode())  # Mengirimkan pesan informasi (dalam bentuk html) ke klien
