@@ -19,7 +19,7 @@ body {
 
 .images {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 50px 50px;
 }
 
@@ -31,14 +31,4 @@ body {
   justify-content: center;
   padding-top: 30px;
   padding-bottom: 30px;
-}
-
-.section-B {
-  /* padding: 20px; */
-  /* display: flex; */
-  justify-content: space-between;
-  align-items: center;
-  /* text-align: center; */
-  max-width: 1200px;
-  margin: 0 auto;
 }
