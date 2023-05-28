@@ -1,7 +1,9 @@
 # socket-basic-webserver
 
 Fakhri Fadillah Rahman - 1301210386
+
 Rafly Muhammad Ghifari - 1301210442
+
 Ahmad Nurcahyo Dharmajati - 1301210538
 
 Cara menjalankan program
